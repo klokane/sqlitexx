@@ -3,6 +3,9 @@
 #define SQLITEXX_H_7RBKBKCH
 
 #include <sqlite3.h>
+#include <boost/uuid/uuid.hpp>
+#include <boost/uuid/uuid_io.hpp>
+
 
 //  Copyright Jiri Kratochvil (aka KLoK) 2010
 //  Distributed under the Boost Software License, Version 1.0.
@@ -186,7 +189,7 @@ namespace binding {
   public:
     extractor(sqlite3_stmt* const& s) : statement_(s) {}
     template<class T>
-    void operator()(T& val) ;
+    void operator()(T& val);
     void reset() { extracted_.clear(); }
 
   private:
@@ -220,7 +223,7 @@ namespace binding {
   }
 
   template<>
-  void extractor::operator()<int64_t>(int64_t& into) {
+  void extractor::operator()<long long>(long long& into) {
     into = sqlite3_column_int64(statement_,extracted_.size());
     extracted_.push_back(true);
   }
